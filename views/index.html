@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+
+
+  <center><body>
+
+  <h1> JOKE ALERT </h1>
+  <button id= "clickme" ><a>press here for a Meta-Joke</a></button>
+    <p id="joke"> </p>
+    <img src="http://1.bp.blogspot.com/_IoU3bEFUwWc/TLtYEK5bBjI/AAAAAAAAKfU/VE06dj_s9hw/s1600/Benoît+B.+Mandelbrot.jpg">
+<h3> Want to join our Joke Mailing list? Subscribe below </h3>
+    <form action="/submit" method= 'post'>
+
+  <input type="text" name="firstname" placeholder="First name"><br>
+  <br>
+  <input type="text" name="lastname" placeholder="Last name"><br>
+  <br>
+  <input type="text" name="email" placeholder="email"><br><br>
+  <input type="submit" value="Submit">
+</form>
+  </body></center>
+
+
+
+
+
+
+
+
+  <script>
+$('#clickme').click(function(){
+
+
+  $.ajax('http://localhost:3000/jokes', {
+    method: 'GET',
+    crossDomain: true,
+    dataType: 'JSON',
+    success:function(data) {
+      console.log(data);
+
+      for(var i = 0;i < data.length; i++) {
+        console.log(data[i]);
+        $('<p>' + data[i].joke + '</p>').appendTo('#joke');
+        }
+}
+});
+})
+  </script>
+</html>
