@@ -7,16 +7,20 @@ var fs = require('fs');
 
 router.post('/', function(req, res, next) {
   console.log(req.body);
+  var formsubmit = {
+    first_name: req.body.firstname,
+    last_name: req.body.lastname,
+    email: req.body.email
+  };
+  fs.readFile(path.join(__dirname, '../contact.txt'),function(err, data){
+    var jsonparse =  JSON.parse(data);
+    jsonparse.push(formsubmit);
+    var jsonstringify = JSON.stringify(jsonparse);
 
-  var string =
-    "{ \"first_name\" :" + req.body.firstname + "," +  "\"last_name\" :" + "\"" + req.body.lastname + ","  + "\"email\" :" + req.body.email + "}," + '\n';
-
-  fs.appendFile('contact.txt', string, function(err) {
-
-    console.log('The "contact data" was appended to the file!');
-    res.redirect('/');
+    fs.writeFile('contact.txt', jsonstringify, function(err) {
+      res.redirect('/');
+    });
   });
-
 });
 
 module.exports = router;
